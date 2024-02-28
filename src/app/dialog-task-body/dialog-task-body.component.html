@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Create New Board</h2>
+<mat-dialog-content>
+  <p>Name of the Board</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="title">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="description">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="subtask">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="title" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
