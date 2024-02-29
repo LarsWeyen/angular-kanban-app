@@ -4,25 +4,13 @@
       <span>{{ column.columnTitle }}</span>
     </div>
     <div class="column-tasks">
-      <div class="task">
+      <div class="task" *ngFor="let task of column.tasks">
         <div class="task-content">
-          <h3>Build UI for onboarding flow</h3>
-          <p>0 of 3 subtasks</p>
+          <h3>{{task.title}}</h3>
+          <p>0 of {{task.subtasks.length}} subtasks</p>
         </div>
       </div>
-      <div class="task">
-        <div class="task-content">
-          <h3>Build UI for search</h3>
-          <p>0 of 1 subtasks</p>
-        </div>
-      </div>
-      <div class="task">
-        <div class="task-content">
-          <h3>Build settings UI</h3>
-          <p>0 of 2 subtasks</p>
-        </div>
-      </div>
-      
+
     </div>
   </div>
   <div class="new-column" (click)="addNewColumnToBoard()">
