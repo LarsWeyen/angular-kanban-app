@@ -1,17 +1,58 @@
-<h2 mat-dialog-title>Create New Board</h2>
+<h1 mat-dialog-title>Add New Task</h1>
 <mat-dialog-content>
-  <p>Name of the Board</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="title">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [(ngModel)]="description">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [(ngModel)]="subtask">
-  </mat-form-field>
+  <form id="task-form">
+    <label for="title">Title: </label>
+    <input
+      matInput
+      type="text"
+      id="title"
+      name="title"
+      [(ngModel)]="title"
+      placeholder="e.g. Take coffee break"
+    />
+    <label for="description">Description:</label>
+    <textarea
+      id="description"
+      name="description"
+      [(ngModel)]="description"
+      placeholder="eg. It's always good to take a break. This 15 minute break will recharge the batteries a little."
+    ></textarea>
+    <label for="subtasks">Subtasks:</label>
+    <ul id="subtasks">
+      <li *ngFor="let subtask of subtasks; let i = index">
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="subtask.title"
+          name="subtask"
+          [ngModelOptions]="{ standalone: true }"
+          value="{{ subtask.title }}"
+          [ngModel]="subtaskInputs[i]"
+          placeholder="e.g Drink coffee & smile"
+        />
+        <div class="remove-subtask" (click)="removeSubtask(i)">X</div>
+      </li>
+    </ul>
+    <button
+      mat-flat-button
+      type="button"
+      (click)="addSubtask()"
+      id="add-subtask"
+    >
+      +Add New Subtask
+    </button>
+    <label for="status">Status:</label>
+    <select id="status" name="status" *ngIf="data.board.boardColumns.length; else elseBlock" [(ngModel)]="column">
+      <option *ngFor="let column of data.board.boardColumns" value="todo" [ngValue]="column">{{column.columnTitle}}</option>
+    </select>
+    <ng-template #elseBlock>
+      <select id="status" name="status" disabled>
+        <option>No available column</option>
+      </select>
+    </ng-template>
+    <button mat-flat-button color="primary" (click)="addTaskClick()">
+      Create Task
+    </button>
+  </form>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="title" cdkFocusInitial>Ok</button>
-</mat-dialog-actions>
+
