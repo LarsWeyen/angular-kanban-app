@@ -3,6 +3,7 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface DialogData {
   boardTitle: string;
@@ -11,7 +12,7 @@ export interface DialogData {
 @Component({
   selector: 'app-dialog-body',
   standalone: true,
-  imports: [MatDialogModule,MatFormFieldModule,FormsModule,MatInputModule],
+  imports: [MatDialogModule,MatFormFieldModule,FormsModule,MatInputModule,MatButtonModule],
   templateUrl: './dialog-body.component.html',
   styleUrl: './dialog-body.component.css'
 })
