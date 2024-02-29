@@ -1,0 +1,52 @@
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+  }
+  
+  #task-form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+  }
+  
+  #task-form label {
+    margin-bottom: 5px;
+  }
+  
+  #task-form input,
+  #task-form textarea,
+  #task-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  #subtasks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #subtasks li {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  #add-subtask {
+    padding: 10px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  #status {
+    width: 100%;
+  }
