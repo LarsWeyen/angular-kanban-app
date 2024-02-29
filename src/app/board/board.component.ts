@@ -23,13 +23,12 @@ export class BoardComponent implements OnInit {
       if(id){
         this.boardId = parseInt(id,10)
         this.store.getBoard(this.boardId).subscribe(board => this.board = board)
-        console.log(this.board)
       }
     })
   }
-
+  
   addNewColumnToBoard(): void{
-    const newColumn: Column = { columnId: this.board.boardColumns.length+1, columnTitle: 'New Column'}
+    const newColumn: Column = { columnId: this.board.boardColumns.length+1, columnTitle: 'New Column', tasks: []}
 
     this.store.addColumnToBoard(this.boardId,newColumn)
   }
