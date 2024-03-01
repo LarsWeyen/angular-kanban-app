@@ -1,0 +1,20 @@
+<mat-dialog-content class="dialog">
+  <div id="task-container">
+    <h1 class="main-heading">{{data.task.title}}</h1>
+    <p class="description">{{data.task.description}}</p>
+    <div *ngIf="data.task.subtasks.length">
+      <p class="subtasks-heading" >Subtasks ({{getCompletedSubtasksCount()}} of {{data.task.subtasks.length}})</p>
+      <ul class="task-list" >
+        <li class="subtask" *ngFor="let subtask of data.task.subtasks">
+            <mat-checkbox color="primary" [checked]="subtask.isComplete" (click)="toggleFullfilled(subtask)"></mat-checkbox>
+            <p [class.is-complete]="subtask.isComplete">{{subtask.title}}</p>
+        </li>
+      </ul>
+    </div>
+      <h3 class="subheading">Status</h3>
+    <select id="status" name="status">
+      <option *ngFor="let column of data.board.boardColumns">{{column.columnTitle}}</option>
+    </select>
+</div>
+</mat-dialog-content>
+
