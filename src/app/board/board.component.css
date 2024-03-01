@@ -20,6 +20,12 @@
     padding: 8px 14px;
     border-radius: 10px;
     width: 100%;
+    min-height: 112px;
+}
+
+.column-header{
+    opacity: .7;
+    padding-block: 1rem;
 }
 
 .new-column{
