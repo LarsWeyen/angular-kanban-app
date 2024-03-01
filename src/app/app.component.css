@@ -28,6 +28,15 @@
 
 .example-sidenav {
   padding: 20px;
+  background-color: #2c2c38;
+  color: #FFFFFF;
+  border-right: solid 1px hsla(0, 0%, 100%, 0.1);
+}
+
+mat-toolbar{
+  background-color: #2c2c38;
+  color: #FFFFFF;
+  border-bottom: solid 1px hsla(0, 0%, 100%, 0.1);
 }
 
 .header-title{
