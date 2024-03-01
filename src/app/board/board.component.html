@@ -1,13 +1,13 @@
 <div class="container">
   <div class="column" *ngFor="let column of board.boardColumns">
     <div class="column-header">
-      <span>{{ column.columnTitle }}</span>
+      <span>{{ column.columnTitle }} ({{column.tasks.length}})</span>
     </div>
     <div class="column-tasks">
-      <div class="task" *ngFor="let task of column.tasks">
+      <div class="task" *ngFor="let task of column.tasks" (click)="openTaskDetails(task)">
         <div class="task-content">
           <h3>{{task.title}}</h3>
-          <p>0 of {{task.subtasks.length}} subtasks</p>
+          <p *ngIf="task.subtasks.length">{{getCompletedSubtasksCount(task)}} of {{task.subtasks.length}} subtasks</p>
         </div>
       </div>
 
