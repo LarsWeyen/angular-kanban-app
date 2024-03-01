@@ -4,3 +4,8 @@
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-dialog-surface{
+    background-color: #2c2c38 !important;
+    border-radius: 10px !important;
+}
