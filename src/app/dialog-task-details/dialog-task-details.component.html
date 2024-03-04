@@ -12,8 +12,8 @@
       </ul>
     </div>
       <h3 class="subheading">Status</h3>
-    <select id="status" name="status">
-      <option *ngFor="let column of data.board.boardColumns">{{column.columnTitle}}</option>
+    <select id="status" name="status" [(ngModel)]="selectedStatus" (change)="updateStatus($event)">
+      <option *ngFor="let column of data.board.boardColumns" >{{column.columnTitle}}</option>
     </select>
 </div>
 </mat-dialog-content>

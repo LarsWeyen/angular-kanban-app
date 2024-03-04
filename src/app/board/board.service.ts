@@ -61,8 +61,27 @@ export class BoardService {
     const taskIndex = this.data[boardIndex].boardColumns[columnIndex].tasks.findIndex(t => t.title === task.title)
     const subtaskIndex = this.data[boardIndex].boardColumns[columnIndex].tasks[taskIndex].subtasks.findIndex(sub=> sub.title === subtask.title)
 
+    console.log(this.data[boardIndex])
     if (boardIndex !== -1) {
       this.data[boardIndex].boardColumns[columnIndex].tasks[taskIndex].subtasks[subtaskIndex].isComplete = !this.data[boardIndex].boardColumns[columnIndex].tasks[taskIndex].subtasks[subtaskIndex].isComplete;
+    } else {
+      console.error(`Board with ID ${boardId} not found.`);
+    }
+  }
+
+  changeTaskStatus(boardId: number, task: Task, newStatus: string){
+    const boardIndex = this.data.findIndex(board => board.boardId === boardId);
+    const columnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnId === task.column.columnId)
+    const taskIndex = this.data[boardIndex].boardColumns[columnIndex].tasks.findIndex(t => t.title === task.title)
+    const newColumnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnTitle === newStatus)
+
+    const column = this.data[boardIndex].boardColumns.find(col => col.columnTitle === newStatus);
+
+    if (boardIndex !== -1) {
+      this.data[boardIndex].boardColumns[columnIndex].tasks.splice(taskIndex,1);
+      
+      this.data[boardIndex].boardColumns[newColumnIndex].tasks.push(task);
+      this.data[boardIndex].boardColumns[newColumnIndex].tasks[taskIndex].column = column!;
     } else {
       console.error(`Board with ID ${boardId} not found.`);
     }
