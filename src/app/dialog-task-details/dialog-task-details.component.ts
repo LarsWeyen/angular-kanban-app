@@ -1,4 +1,4 @@
-import { Component,Inject } from '@angular/core';
+import { Component,Inject, OnInit } from '@angular/core';
 import { MatDialogRef,MAT_DIALOG_DATA,MatDialogModule } from '@angular/material/dialog';
 import { Task } from '../models/task';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -7,6 +7,7 @@ import { Board } from '../models/board';
 import { BoardService } from '../board/board.service';
 import { Subtask } from '../models/subtask';
 import { FormsModule } from '@angular/forms';
+import { Column } from '../models/column';
 
 export interface DialogData {
   task: Task;
@@ -20,13 +21,21 @@ export interface DialogData {
   templateUrl: './dialog-task-details.component.html',
   styleUrl: './dialog-task-details.component.css'
 })
-export class DialogTaskDetailsComponent {
+export class DialogTaskDetailsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogTaskDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private store: BoardService
   ) {}
 
-  selectedStatus: string = this.data.task.column.columnTitle;
+  column : Column|undefined;
+  selectedStatus: string|undefined;
+
+  ngOnInit(): void {
+    this.column = this.store.getColumnById(this.data.task.columnId);
+    this.selectedStatus = this.column?.columnTitle;
+  }
+
+   
 
   toggleFullfilled(subtask: Subtask) {
     this.store.toggleCompletedSubtask(this.data.board.boardId,this.data.task,subtask)
@@ -37,6 +46,6 @@ export class DialogTaskDetailsComponent {
   }
 
   updateStatus(e: any) {
-    this.store.changeTaskStatus(this.data.board.boardId,this.data.task,e.target.value)
+    this.store.changeTaskStatus(this.data.task,e.target.value)
   }
 }
