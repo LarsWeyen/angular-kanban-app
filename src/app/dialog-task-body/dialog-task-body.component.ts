@@ -9,6 +9,7 @@ import { Subtask } from '../models/subtask';
 import { Board } from '../models/board';
 import { Task } from '../models/task';
 import { Column } from '../models/column';
+import { BoardService } from '../board/board.service';
 
 export interface DialogData {
   board: Board;
@@ -24,18 +25,19 @@ export interface DialogData {
 export class DialogTaskBodyComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogTaskBodyComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private store:BoardService
   ) {}
   column: any;
   title:string = '';
   description:string = '';
   subtasks:Subtask[] = [];
   subtaskInputs: string[] = [];
+  private nextSubtaskId = 1
 
   addSubtask(){
-    const newSubtask = new Subtask('',false);
+    const newSubtask = new Subtask(this.nextSubtaskId,'',false);
     this.subtasks.push(newSubtask);
-
+    this.nextSubtaskId++;
     // Assign a unique ngModel binding for the new subtask
     this.subtaskInputs.push('');
   }
@@ -50,6 +52,6 @@ export class DialogTaskBodyComponent {
   }
 
   addTaskClick(){
-    this.dialogRef.close(new Task(this.title,this.description,this.subtasks,this.column));
+    this.dialogRef.close(new Task(this.store.getLastTaskId()+1,this.title,this.description,this.subtasks,this.column.columnId));
   }
 }
