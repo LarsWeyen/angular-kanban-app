@@ -10,16 +10,47 @@ import { Subtask } from '../models/subtask';
 })
 export class BoardService {
   private data: Board[] = [
-    new Board(1,'Platform Launch',[
-        {columnId: 1, columnTitle: 'TODO', tasks: [
-          {title: 'test',description:'test',subtasks:[],column:{columnId:1,columnTitle: 'TODO',tasks:[]}}
-        ]},
-        {columnId: 2, columnTitle: 'DOING', tasks: []},
-        {columnId: 3, columnTitle: 'Done', tasks: []},
-    ]),
-    new Board(2,'Marketing Plan',[]),
-    new Board(3,'Roadmap',[])
-  ]
+    {
+      boardId: 1,
+      boardTitle: 'Sample Board',
+      boardColumns: [
+        {
+          columnId: 1,
+          columnTitle: 'To Do',
+          tasks: [
+            {
+              id: 1,
+              title: 'Task 1',
+              description: 'Description for Task 1',
+              columnId: 1,
+              subtasks: [
+                { id: 1, title: 'Subtask 1', isComplete: false },
+                { id: 2, title: 'Subtask 2', isComplete: true },
+              ],
+            },          
+          ],
+        },
+        {
+          columnId: 2,
+          columnTitle: 'In Progress',
+          tasks: [
+            {
+              id: 2,
+              title: 'Task 2',
+              description: 'Description for Task 2',
+              columnId: 2,
+              subtasks: [
+                { id: 3, title: 'Subtask 3', isComplete: false },
+              ],
+            },
+            
+          ],
+        },
+        
+      ],
+    },
+    
+  ];
   constructor() { }
 
   addBoard(board: Board){
@@ -36,15 +67,22 @@ export class BoardService {
     }
   }
 
-  addTaskToColumn(boardId: number, newTask: Task){
-    const boardIndex = this.data.findIndex(board => board.boardId === boardId);
-    const columnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnId === newTask.column.columnId)
+  addTaskToColumn(columnId: number, newTask: Task){
+    // const boardIndex = this.data.findIndex(board => board.boardId === boardId);
+    // const columnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnId === newTask.columnId)
 
-    if (boardIndex !== -1) {
-      this.data[boardIndex].boardColumns[columnIndex].tasks.push(newTask);
-    } else {
-      console.error(`Board with ID ${boardId} not found.`);
+    const column = this.getColumnById(columnId)
+    
+    if(column){
+      
+      column.tasks.push(newTask);
     }
+
+    // if (boardIndex !== -1) {
+    //   this.data[boardIndex].boardColumns[columnIndex].tasks.push(newTask);
+    // } else {
+    //   console.error(`Board with ID ${boardId} not found.`);
+    // }
   }
 
   getAllBoards(){
@@ -56,34 +94,88 @@ export class BoardService {
   }
 
   toggleCompletedSubtask(boardId: number, task: Task, subtask: Subtask){
-    const boardIndex = this.data.findIndex(board => board.boardId === boardId);
-    const columnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnId === task.column.columnId)
-    const taskIndex = this.data[boardIndex].boardColumns[columnIndex].tasks.findIndex(t => t.title === task.title)
-    const subtaskIndex = this.data[boardIndex].boardColumns[columnIndex].tasks[taskIndex].subtasks.findIndex(sub=> sub.title === subtask.title)
+    const board = this.data.find(board => board.boardId === boardId);
 
-    console.log(this.data[boardIndex])
-    if (boardIndex !== -1) {
-      this.data[boardIndex].boardColumns[columnIndex].tasks[taskIndex].subtasks[subtaskIndex].isComplete = !this.data[boardIndex].boardColumns[columnIndex].tasks[taskIndex].subtasks[subtaskIndex].isComplete;
+    if (board) {
+      const column = board.boardColumns.find(column => column.columnId === task.columnId);
+  
+      if (column) {
+        const taskToUpdate = column.tasks.find(t => t.title === task.title);
+  
+        if (taskToUpdate) {
+          const subtaskToUpdate = taskToUpdate.subtasks.find(sub => sub.title === subtask.title);
+  
+          if (subtaskToUpdate) {
+            subtaskToUpdate.isComplete = !subtaskToUpdate.isComplete;
+          } else {
+            console.error(`Subtask with title ${subtask.title} not found in task.`);
+          }
+        } else {
+          console.error(`Task with title ${task.title} not found in column.`);
+        }
+      } else {
+        console.error(`Column with ID ${task.columnId} not found.`);
+      }
     } else {
       console.error(`Board with ID ${boardId} not found.`);
     }
   }
 
-  changeTaskStatus(boardId: number, task: Task, newStatus: string){
-    const boardIndex = this.data.findIndex(board => board.boardId === boardId);
-    const columnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnId === task.column.columnId)
-    const taskIndex = this.data[boardIndex].boardColumns[columnIndex].tasks.findIndex(t => t.title === task.title)
-    const newColumnIndex = this.data[boardIndex].boardColumns.findIndex(column => column.columnTitle === newStatus)
-
-    const column = this.data[boardIndex].boardColumns.find(col => col.columnTitle === newStatus);
-
-    if (boardIndex !== -1) {
-      this.data[boardIndex].boardColumns[columnIndex].tasks.splice(taskIndex,1);
-      
-      this.data[boardIndex].boardColumns[newColumnIndex].tasks.push(task);
-      this.data[boardIndex].boardColumns[newColumnIndex].tasks[taskIndex].column = column!;
-    } else {
-      console.error(`Board with ID ${boardId} not found.`);
+  changeTaskStatus(task: Task, newStatus: string){
+    
+    const taskColumn = this.getColumnById(task?.columnId)
+    for (const board of this.data) {
+      for (const column of board.boardColumns) {
+        if(taskColumn){
+          if (column.columnTitle === newStatus) {
+            
+            const taskIndex = taskColumn.tasks.findIndex((t) => t.id === task?.id);
+            taskColumn.tasks.splice(taskIndex, 1);
+            task.columnId = column.columnId;
+            column.tasks.push(task);
+          
+        }
+        }
+      }
     }
+  }
+
+  getColumnById(columnId: number): Column | undefined {
+    for (const board of this.data) {
+      for (const column of board.boardColumns) {
+        if (column.columnId === columnId) {
+          return column;
+        }
+      }
+    }
+    return undefined;
+  }
+
+  getTaskById(taskId: number): Task | undefined {
+    for (const board of this.data) {
+      for (const column of board.boardColumns) {
+        const task = column.tasks.find((t)=> t.id===taskId)
+        if(task){
+          return task;
+        }
+      }
+    }
+    return undefined;
+  }
+
+  getLastTaskId(): number {
+    let lastTaskId: number = 0;
+
+    for (const board of this.data) {
+      for (const column of board.boardColumns) {
+        for (const task of column.tasks) {
+          if (task.id > lastTaskId) {
+            lastTaskId = task.id;
+          }
+        }
+      }
+    }
+
+    return lastTaskId;
   }
 }
