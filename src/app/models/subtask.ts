@@ -1,3 +1,3 @@
 export class Subtask{
-    constructor(public title : string, public isComplete: boolean){}
+    constructor(public id:number, public title : string, public isComplete: boolean){}
 }
