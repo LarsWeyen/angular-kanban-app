@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Task) => {
       if (result) {
-         this.store.addTaskToColumn(this.board.boardId,result);
+         this.store.addTaskToColumn(result.columnId,result);
          console.log(this.board)
       }
     });
