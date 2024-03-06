@@ -88,6 +88,7 @@ export class AppComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogBodyComponent, {
       data: { boardTitle: this.boardTitle },
+      panelClass: 'custom-modalbox'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
