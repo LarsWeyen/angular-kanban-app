@@ -5,6 +5,10 @@
 h1 {
     text-align: center;
   }
+
+  .new-task-h1{
+    color: #FFFFFF;
+  }
   
   #task-form {
     display: flex;
