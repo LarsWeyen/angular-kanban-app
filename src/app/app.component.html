@@ -6,8 +6,10 @@
       <h1>Kanban</h1>
     </div>
     <div class="boards-container">
-      <span>ALL BOARDS ({{boards.length}})</span>
-      <div *ngFor="let board of boards" class="board" [routerLink]="['/boards',board.boardId]">
+      <div class="total-boards">
+        <span>ALL BOARDS ({{boards.length}})</span>
+      </div>
+      <div anchor="board-anchor" *ngFor="let board of boards" class="board" routerLinkActive="active-board" [routerLink]="['/boards',board.boardId]">
         <mat-icon>blur_on</mat-icon>
         <span>{{board.boardTitle}}</span>
       </div>
@@ -25,11 +27,11 @@
       </button>
       <span>{{board.boardTitle}}</span>
       <span class="example-spacer"></span>
-      <button mat-fab extended color="primary" (click)="openNewTaskDialog()">
+      <button mat-fab extended class="primary-color" (click)="openNewTaskDialog()">
         + Add New Task
       </button>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>share</mat-icon>
+        <mat-icon>more_vert</mat-icon>
       </button>
     </mat-toolbar>
   
