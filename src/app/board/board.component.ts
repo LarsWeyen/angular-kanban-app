@@ -7,11 +7,12 @@ import { Column } from '../models/column';
 import { DialogTaskDetailsComponent } from '../dialog-task-details/dialog-task-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '../models/task';
+import {CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray,transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CdkDropListGroup, CdkDropList, CdkDrag],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
@@ -45,6 +46,24 @@ export class BoardComponent implements OnInit {
 
   getCompletedSubtasksCount(task: Task): number {
     return task.subtasks.filter(subtask => subtask.isComplete).length;
+  }
+
+  drop(event: CdkDragDrop<Task[]>): void{
+    console.log('drop',event)
+    if (event.previousContainer === event.container) {
+      // Move item within the same list
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+      
+    }else {
+      // Move item to another list
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 
 }

@@ -1,10 +1,10 @@
-<div class="container">
-  <div class="column" *ngFor="let column of board.boardColumns">
+<div class="container" cdkDropListGroup>
+  <div class="column" *ngFor="let column of board.boardColumns" cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
     <div class="column-header">
       <span>{{ column.columnTitle }} ({{column.tasks.length}})</span>
     </div>
-    <div class="column-tasks">
-      <div class="task" *ngFor="let task of column.tasks" (click)="openTaskDetails(task)">
+    <div class="column-tasks"  >
+      <div class="task" *ngFor="let task of column.tasks" (click)="openTaskDetails(task)" cdkDrag>
         <div class="task-content">
           <h3>{{task.title}}</h3>
           <p *ngIf="task.subtasks.length">{{getCompletedSubtasksCount(task)}} of {{task.subtasks.length}} subtasks</p>
