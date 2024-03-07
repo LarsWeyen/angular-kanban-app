@@ -23,6 +23,7 @@
 - Create boards and tasks
 - Mark tasks as complete
 - Add subtasks to tasks
+- Drag and drop tasks
 
 ## How To Use
 Visit the website https://kanbanangular.netlify.app
@@ -51,6 +52,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - **Angular**
 - **Angular CLI**
 - **Material UI**
+- **Angular Cdk**
 
 ## Code scaffolding
 
