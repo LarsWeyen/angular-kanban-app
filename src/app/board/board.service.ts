@@ -12,44 +12,134 @@ export class BoardService {
   private data: Board[] = [
     {
       boardId: 1,
-      boardTitle: 'Sample Board',
+      boardTitle: "Platform Launch",
       boardColumns: [
         {
           columnId: 1,
-          columnTitle: 'To Do',
+          columnTitle: "To Do",
           tasks: [
             {
               id: 1,
-              title: 'Task 1',
-              description: 'Description for Task 1',
+              title: "Build UI for onboarding flow",
+              description: "",
               columnId: 1,
               subtasks: [
-                { id: 1, title: 'Subtask 1', isComplete: false },
-                { id: 2, title: 'Subtask 2', isComplete: true },
-              ],
-            },          
-          ],
+                {
+                  id: 1,
+                  title: "Design login screen",
+                  isComplete: false
+                },
+                {
+                  id: 2,
+                  title: "Design signup screen",
+                  isComplete: false
+                },
+                {
+                  id: 3,
+                  title: "Design account creation flow",
+                  isComplete: false
+                }
+              ]
+            },
+            {
+              id: 2,
+              title: "Design settings and search pages",
+              description: "",
+              columnId: 2,
+              subtasks: [
+                {
+                  id: 4,
+                  title: "Design settings page",
+                  isComplete: false
+                },
+                {
+                  id: 5,
+                  title: "Design search page",
+                  isComplete: false
+                }
+              ]
+            },
+            {
+              id: 3,
+              title: "Conduct 5 wireframe tests",
+              description: "",
+              columnId: 3,
+              subtasks: [
+                {
+                  id: 6,
+                  title: "Subtask",
+                  isComplete: false
+                },
+              ]
+            }
+          ]
         },
         {
           columnId: 2,
-          columnTitle: 'In Progress',
+          columnTitle: "Doing",
           tasks: [
             {
-              id: 2,
-              title: 'Task 2',
-              description: 'Description for Task 2',
-              columnId: 2,
+              id: 4,
+              title: "Build UI for search",
+              description: "",
+              columnId: 1,
               subtasks: [
-                { id: 3, title: 'Subtask 3', isComplete: false },
-              ],
+                {
+                  id: 7,
+                  title: "Subtask",
+                  isComplete: false
+                },
+              ]
             },
-            
-          ],
+            {
+              id: 5,
+              title: "Add account management endpoints",
+              description: "",
+              columnId:2,
+              subtasks: [
+                {
+                  id: 8,
+                  title: "Subtask",
+                  isComplete: false
+                },
+              ]
+            },
+            {
+              id: 6,
+              title: "Create wireframe prototype",
+              description: "",
+              columnId: 3,
+              subtasks: [
+                {
+                  id: 9,
+                  title: "Subtask",
+                  isComplete: false
+                },
+              ]
+            }
+          ]
         },
-        
-      ],
+        {
+          columnId: 3,
+          columnTitle: "Done",
+          tasks: [
+            {
+              id: 7,
+              title: "Create New Board",
+              description: "",
+              subtasks: [
+                {
+                  id: 10,
+                  title: "Subtask",
+                  isComplete: false
+                },
+              ],
+              columnId: 3
+            }
+          ]
+        }
+      ]
     },
-    
   ];
   constructor() { }
 
